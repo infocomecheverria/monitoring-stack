@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  blackbox-exporter:
+    image: prom/blackbox-exporter:latest
+    container_name: blackbox-exporter
+    restart: unless-stopped
+    command: ["--config.file=/etc/blackbox/blackbox.yml"]
+    volumes:
+      - ./blackbox.yml:/etc/blackbox/blackbox.yml:ro
+    networks:
+      - monitoring_net
+    # healthcheck opcional
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:9115/metrics"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+networks:
+  monitoring_net:
+    external: true
