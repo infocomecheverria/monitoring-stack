@@ -12,7 +12,7 @@ services:
     volumes:
       - prometheus_data:/prometheus
     command:
-      - "--config.file=/etc/prometheus.yml"
+      - "--config.file=/etc/prometheus/prometheus.yml"
       - "--storage.tsdb.path=/prometheus"
     networks:
       - monitoring_net
